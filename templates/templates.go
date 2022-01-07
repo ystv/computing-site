@@ -2,11 +2,10 @@ package templates
 
 import (
 	"embed"
+	"github.com/ystv/computing-site/team"
 	"html/template"
 	"io"
 	"time"
-
-	"github.com/ystv/computing/team"
 )
 
 //go:embed *.tmpl
