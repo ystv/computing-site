@@ -2,7 +2,7 @@ package templates
 
 import (
 	"embed"
-	"github.com/ystv/computing-site/team"
+	"github.com/ystv/computing_site/team"
 	"html/template"
 	"io"
 	"time"

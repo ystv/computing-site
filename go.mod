@@ -1,4 +1,4 @@
-module github.com/ystv/computing-site
+module github.com/ystv/computing_site
 
 go 1.17
 

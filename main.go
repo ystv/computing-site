@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/ystv/computing-site/team"
-	"github.com/ystv/computing-site/templates"
+	"github.com/ystv/computing_site/team"
+	"github.com/ystv/computing_site/templates"
 )
 
 type Web struct {
