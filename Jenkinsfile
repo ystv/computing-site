@@ -42,7 +42,7 @@ pipeline {
                                 sh '''ssh -tt deploy@$TARGET_SERVER << EOF
                                     docker pull $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
                                     docker rm -f ystv-computing
-                                    docker run -d -p 1336:8081 --env-file $TARGET_PATH/computing/.env --name ystv-computing $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
+                                    docker run -d -p 7075:7075 --env-file $TARGET_PATH/computing/.env --name ystv-computing $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
                                     docker image prune -a -f --filter "label=site=computing"
                                     exit 0
                                 EOF'''
@@ -55,7 +55,7 @@ pipeline {
                         expression { return env.TAG_NAME ==~ /v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)/ } // Checking if it is main semantic version release
                     }
                     environment {
-                        APP_ENV = credentials('')
+                        APP_ENV = credentials('computing-env')
                         TARGET_SERVER = credentials('prod-server-address')
                         TARGET_PATH = credentials('prod-server-path')
                     }
@@ -66,7 +66,7 @@ pipeline {
                                 sh '''ssh -tt deploy@$TARGET_SERVER << EOF
                                     docker pull $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
                                     docker rm -f ystv-computing
-                                    docker run -d -p 1336:8081 --env-file $TARGET_PATH/computing/.env --name ystv-computing $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
+                                    docker run -d -p 7075:7075 --env-file $TARGET_PATH/computing/.env --name ystv-computing $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
                                     docker image prune -a -f --filter "label=site=computing"
                                     exit 0
                                 EOF'''
