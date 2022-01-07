@@ -1,26 +1,22 @@
-# syntax=docker/dockerfile:1
+FROM golang:1.17.6-alpine3.15
 
-FROM golang:1.17-alpine
-
-#LABEL site="computing"
-#LABEL stage="builder"
+LABEL site="computing"
+LABEL stage="builder"
 
 WORKDIR /src/
 
 COPY go.mod ./
 COPY go.sum ./
+COPY . ./
 RUN go mod download
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go generate
 
 COPY *.go ./
 
-RUN go get github.com/ystv/computing_site/team
-RUN go get github.com/ystv/computing_site/templates
-RUN go build github.com/ystv/computing_site/team
-RUN go build github.com/ystv/computing_site/templates
+RUN apk update && apk add git
 
-RUN go build -o computing
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o computing
 
 EXPOSE 7075
 
