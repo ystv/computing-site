@@ -1,0 +1,80 @@
+{{define "content"}}
+<div id="content">
+<div class="container">
+  <h1 class="title">YSTV Computing</h1>
+  <div class="subtitle">
+    <p>Computing internal pages! Made with the cool Go</p>
+
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <p class="title">Documentation</p>
+      <div class="content">
+        Since there is a decent amount of parts making YSTV work, it's useful
+        to have knowledge on how it all works.
+
+        <ul>
+          <li><a href="https://docs.ystv.co.uk/wiki/Computing:YSTV_Computing">General documentation</a>
+          <li><a href="https://api.ystv.co.uk/swagger/index.html">API documentation</a></li>
+        </ul>
+      </div>
+    </div>
+  </div> 
+  <div class="card">
+    <div class="card-content">
+      <p class="title">Computing Services</p>
+      <div class="content">
+        These are the services that make our life easier.
+
+        <ul>
+          <li><a href="https://ci.ystv.co.uk">Continuous Integration</a></li>
+          <li><a href="https://db.ystv.co.uk">DB administration</a></li>
+          <li><a href="https://ystv.co.uk/xymon">System health monitor</a></li>
+          <li><a href="https://docker.ystv.co.uk">Docker administration</a></li>
+          <li><a href="https://cobra.ystv.co.uk">Stream management</a></li>
+          <li><a href="https://help.ystv.co.uk/scp">Ticket tracking</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <p class="title">University Services</p>
+      <div class="content">
+        Adminy University sites. Uses your University accounts, smh!
+
+        <ul>
+          <li><a href="https://footprints.york.ac.uk">Footprints</a> (not available by default / retired)</li>
+          <li><a href="https://vcenter.york.ac.uk">vSphere</a> ($ account)</li>
+          <li><a href="https://permman.york.ac.uk">Storage Permissions Manager</a> (invite by comp team)</li>
+          <li><a href="https://landb.york.ac.uk">Men & Mice (lanDB)</a> (training session with uni)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <p class="title">Staging</p>
+      <div class="content">
+        Sites running our unstable builds. Shame everyone is too boring to run these in production!
+
+        If you're adding a new one. Try to follow the theme of just prefixing the root domain with
+        dev and then the rest of the subdomain in-front.
+        <ul>
+          <li><a href="https://dev.ystv.co.uk">Public site</a> (follows master branch)</li>
+          <li><a href="https://api.dev.ystv.co.uk">API</a> (coming soon!)</li>
+          <li><a href="https://my.dev.ystv.co.uk">MyTV</a> (coming soon!)</li>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <p class="title">Team</p>
+      <ul>
+          {{range .Team}}
+            <li><p>{{.Name}}{{if .Role}} - {{.Role}}{{end}}</p></li>
+          {{end}}
+      </ul>
+  </div>
+</div>
+{{end}}
