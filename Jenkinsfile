@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Update Components') {
             steps {
-                sh "docker pull golang:1.17-alpine" // Update with current Go image
+                sh "docker pull golang:1.17.6-alpine" // Update with current Go image
             }
         }
         stage('Build') {
@@ -42,8 +42,7 @@ pipeline {
                                 sh '''ssh -tt deploy@$TARGET_SERVER << EOF
                                     docker pull $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
                                     docker rm -f ystv-computing
-                                    echo /opt/computing/.env
-                                    docker run -d -p 7075:7075 --env-file /opt/computing/.env --name ystv-computing $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
+                                    docker run -d -p 7075:7075 --env-file $TARGET_PATH/computing/.env --name ystv-computing $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
                                     docker image prune -a -f --filter "label=site=computing"
                                     exit 0
                                 EOF'''
@@ -67,7 +66,6 @@ pipeline {
                                 sh '''ssh -tt deploy@$TARGET_SERVER << EOF
                                     docker pull $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
                                     docker rm -f ystv-computing
-                                    echo $TARGET_PATH
                                     docker run -d -p 7075:7075 --env-file $TARGET_PATH/computing/.env --name ystv-computing $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
                                     docker image prune -a -f --filter "label=site=computing"
                                     exit 0

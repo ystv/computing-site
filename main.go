@@ -27,6 +27,7 @@ func main() {
 	}
 
 	web.mux.HandleFunc("/", web.indexPage).Methods("GET")
+	web.mux.HandleFunc("/ystv.ico", web.faviconHandler)
 	log.Println("YSTV Computing site: 0.0.0.0:7075")
 	log.Fatal(http.ListenAndServe("0.0.0.0:7075", web.mux))
 }
@@ -44,4 +45,8 @@ func (web *Web) indexPage(w http.ResponseWriter, r *http.Request) {
 		err = fmt.Errorf("failed to render dashboard: %w", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+}
+
+func (web *Web) faviconHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "public/ystv.ico")
 }

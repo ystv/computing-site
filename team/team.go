@@ -18,7 +18,7 @@ type (
 func New() ([]Member, error) {
 	err := godotenv.Load()
 	if err != nil {
-		fmt.Printf("error loading .env file: %w", err)
+		fmt.Printf("error loading .env file: %s", err)
 	}
 
 	team := os.Getenv("TEAM_JSON")
