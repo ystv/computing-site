@@ -42,7 +42,7 @@ pipeline {
                                 sh '''ssh -tt deploy@$TARGET_SERVER << EOF
                                     docker pull $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
                                     docker rm -f ystv-computing
-                                    echo $TARGET_PATH
+                                    nano $TARGET_PATH/computing/.env
                                     docker run -d -p 7075:7075 --env-file $TARGET_PATH/computing/.env --name ystv-computing $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
                                     docker image prune -a -f --filter "label=site=computing"
                                     exit 0
