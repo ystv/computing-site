@@ -16,7 +16,7 @@ COPY *.go ./
 
 RUN apk update && apk add git
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/computing
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /bin/computing
 
 EXPOSE 7075
 
