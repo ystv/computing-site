@@ -20,4 +20,4 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/computing
 
 EXPOSE 7075
 
-CMD ["/bin/computing"]
+ENTRYPOINT ["/bin/computing"]
