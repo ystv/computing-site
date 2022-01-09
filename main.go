@@ -19,11 +19,11 @@ type Web struct {
 
 func main() {
 	web := Web{mux: mux.NewRouter(), t: templates.New()}
-
+	log.Println("Web loaded")
 	var err error
 	web.team, err = team.New()
 	if err != nil {
-		log.Fatalf("failed to get team: %+v", err)
+		log.Println("failed to get team: %+v", err)
 	}
 
 	web.mux.HandleFunc("/", web.indexPage).Methods("GET")
