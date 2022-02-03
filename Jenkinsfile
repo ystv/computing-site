@@ -8,12 +8,16 @@ pipeline {
     stages {
         stage('Update Components') {
             steps {
-                sh "docker pull golang:1.17.6-alpine"
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'comp-docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                    sh 'docker login $REGISTRY_ENDPOINT'
+                    sh '$USERNAME'
+                    sh '$PASSWORD'
+                    sh 'docker pull golang:1.17.6-alpine'
+                }
             }
         }
         stage('Build') {
             steps {
-                sh 'docker login'
                 sh 'docker build -t $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID .'
             }
         }
@@ -39,21 +43,15 @@ pipeline {
                     steps {
                         sshagent(credentials : ['comp-server-key']) {
                             script {
-                                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'comp-docker',
-                                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                                    sh 'echo uname=$USERNAME pwd=$PASSWORD'
-                                    sh 'rsync -av $APP_ENV deploy@$TARGET_SERVER:$TARGET_PATH/computing/.env'
-                                    sh '''ssh -tt deploy@$TARGET_SERVER << EOF
-                                        docker login $REGISTRY_ENDPOINT
-                                        $USERNAME
-                                        $PASSWORD
-                                        docker pull $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
-                                        docker rm -f ystv-computing
-                                        docker run -d -p 7075:7075 --env-file $TARGET_PATH/computing/.env --name ystv-computing $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
-                                        docker image prune -a -f --filter "label=site=computing"
-                                        exit 0
-                                    EOF'''
-                                }
+                                sh 'echo uname=$USERNAME pwd=$PASSWORD'
+                                sh 'rsync -av $APP_ENV deploy@$TARGET_SERVER:$TARGET_PATH/computing/.env'
+                                sh '''ssh -tt deploy@$TARGET_SERVER << EOF
+                                    docker pull $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
+                                    docker rm -f ystv-computing
+                                    docker run -d -p 7075:7075 --env-file $TARGET_PATH/computing/.env --name ystv-computing $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
+                                    docker image prune -a -f --filter "label=site=computing"
+                                    exit 0
+                                EOF'''
                             }
                         }
                     }
