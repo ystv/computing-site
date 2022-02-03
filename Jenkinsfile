@@ -2,17 +2,18 @@ pipeline {
     agent any
 
     environment {
-        REGISTRY_ENDPOINT = credentials('docker-registry-endpoint')
+        REGISTRY_ENDPOINT = credentials('docker-comp-registry-endpoint')
     }
 
     stages {
         stage('Update Components') {
             steps {
-                sh "docker pull golang:1.17.6-alpine" // Update with current Go image
+                sh "docker pull golang:1.17.6-alpine"
             }
         }
         stage('Build') {
             steps {
+                sh 'docker login'
                 sh 'docker build -t $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID .'
             }
         }
@@ -31,26 +32,33 @@ pipeline {
                         }
                     }
                     environment {
-                        APP_ENV = credentials('computing-env')
-                        TARGET_SERVER = credentials('staging-server-address')
-                        TARGET_PATH = credentials('staging-server-path')
+                        APP_ENV = credentials('comp-env')
+                        TARGET_SERVER = credentials('comp-server-address')
+                        TARGET_PATH = credentials('comp-server-path')
                     }
                     steps {
-                        sshagent(credentials : ['staging-server-key']) {
+                        sshagent(credentials : ['comp-server-key']) {
                             script {
-                                sh 'rsync -av $APP_ENV deploy@$TARGET_SERVER:$TARGET_PATH/computing/.env'
-                                sh '''ssh -tt deploy@$TARGET_SERVER << EOF
-                                    docker pull $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
-                                    docker rm -f ystv-computing
-                                    docker run -d -p 7075:7075 --env-file $TARGET_PATH/computing/.env --name ystv-computing $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
-                                    docker image prune -a -f --filter "label=site=computing"
-                                    exit 0
-                                EOF'''
+                                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'comp-docker',
+                                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                                    sh 'echo uname=$USERNAME pwd=$PASSWORD'
+                                    sh 'rsync -av $APP_ENV deploy@$TARGET_SERVER:$TARGET_PATH/computing/.env'
+                                    sh '''ssh -tt deploy@$TARGET_SERVER << EOF
+                                        docker login $REGISTRY_ENDPOINT
+                                        $USERNAME
+                                        $PASSWORD
+                                        docker pull $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
+                                        docker rm -f ystv-computing
+                                        docker run -d -p 7075:7075 --env-file $TARGET_PATH/computing/.env --name ystv-computing $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
+                                        docker image prune -a -f --filter "label=site=computing"
+                                        exit 0
+                                    EOF'''
+                                }
                             }
                         }
                     }
                 }
-                stage('Production') {
+                /*stage('Production') {
                     when {
                         expression { return env.TAG_NAME ==~ /v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)/ } // Checking if it is main semantic version release
                     }
@@ -73,7 +81,7 @@ pipeline {
                             }
                         }
                     }
-                }
+                }*/
             }
         }
     }
