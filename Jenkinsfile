@@ -9,9 +9,7 @@ pipeline {
         stage('Update Components') {
             steps {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'comp-docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                    sh 'docker login $REGISTRY_ENDPOINT'
-                    sh '$USERNAME'
-                    sh '$PASSWORD'
+                    sh 'docker login $REGISTRY_ENDPOINT --username $USERNAME --password $PASSWORD'
                     sh 'docker pull golang:1.17.6-alpine'
                 }
             }
