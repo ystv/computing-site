@@ -23,7 +23,7 @@ func main() {
 	var err error
 	web.team, err = team.New()
 	if err != nil {
-		log.Println("failed to get team: %+v", err)
+		log.Printf("failed to get team: %+v\n", err)
 	}
 
 	web.mux.HandleFunc("/", web.indexPage).Methods("GET")
@@ -33,7 +33,7 @@ func main() {
 	log.Fatal(http.ListenAndServe("0.0.0.0:7075", web.mux))
 }
 
-func (web *Web) indexPage(w http.ResponseWriter, r *http.Request) {
+func (web *Web) indexPage(w http.ResponseWriter, _ *http.Request) {
 	params := templates.DashboardParams{
 		Base: templates.BaseParams{
 			SystemTime: time.Now(),
