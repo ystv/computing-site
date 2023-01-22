@@ -2,6 +2,7 @@ package templates
 
 import (
 	"embed"
+	"github.com/ystv/computing_site/link"
 	"github.com/ystv/computing_site/team"
 	"html/template"
 	"io"
@@ -20,6 +21,7 @@ type (
 	}
 	DashboardParams struct {
 		Base BaseParams
+		Link link.Link
 		Team []team.Member
 	}
 )

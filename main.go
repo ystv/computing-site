@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/ystv/computing_site/link"
 	"log"
 	"net/http"
 	"time"
@@ -14,13 +15,16 @@ import (
 type Web struct {
 	mux  *mux.Router
 	t    *templates.Templater
+	link link.Link
 	team []team.Member
 }
 
 func main() {
+	var err error
+
 	web := Web{mux: mux.NewRouter(), t: templates.New()}
 	log.Println("Web loaded")
-	var err error
+	web.link, err = link.New()
 	web.team, err = team.New()
 	if err != nil {
 		log.Printf("failed to get team: %+v\n", err)
@@ -38,6 +42,7 @@ func (web *Web) indexPage(w http.ResponseWriter, _ *http.Request) {
 		Base: templates.BaseParams{
 			SystemTime: time.Now(),
 		},
+		Link: web.link,
 		Team: web.team,
 	}
 
