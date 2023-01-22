@@ -11,7 +11,7 @@ import (
 type (
 	Member struct {
 		Name string `json:"name"`
-		Role string `json:"role"`
+		Role string `json:"role,omitempty"`
 	}
 )
 
