@@ -10,7 +10,7 @@ pipeline {
             steps {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'comp-docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                     sh 'docker login --username $USERNAME --password $PASSWORD $REGISTRY_ENDPOINT'
-                    sh 'docker pull golang:1.17.6-alpine'
+                    sh 'docker pull golang:1.19-alpine'
                 }
             }
         }
@@ -41,7 +41,6 @@ pipeline {
                     steps {
                         sshagent(credentials : ['comp-server-key']) {
                             script {
-                                sh 'echo uname=$USERNAME pwd=$PASSWORD'
                                 sh 'rsync -av $APP_ENV deploy@$TARGET_SERVER:$TARGET_PATH/computing/.env'
                                 sh '''ssh -tt deploy@$TARGET_SERVER << EOF
                                     docker pull $REGISTRY_ENDPOINT/ystv/computing:$BUILD_ID
