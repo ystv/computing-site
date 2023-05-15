@@ -1,12 +1,13 @@
 package link
 
 import (
+	"embed"
 	"encoding/json"
 	"fmt"
-	"github.com/joho/godotenv"
-	"log"
-	"os"
 )
+
+//go:embed link.json
+var linkJson embed.FS
 
 type (
 	Base struct {
@@ -39,21 +40,16 @@ type (
 	}
 )
 
-func New() (Link, error) {
-	err := godotenv.Load()
+func New() (*Link, error) {
+	link, err := linkJson.ReadFile("link.json")
 	if err != nil {
-		fmt.Printf("error loading .env file: %s", err)
+		fmt.Printf("error loading link.json file: %s", err)
 	}
 
-	link := os.Getenv("LINK_JSON")
-	if len(link) == 0 {
-		log.Fatal("LINK_JSON environment variable cannot be found!")
-	}
-
-	var data Link
-	err = json.Unmarshal([]byte(link), &data)
+	var data *Link
+	err = json.Unmarshal(link, &data)
 	if err != nil {
-		return Link{}, fmt.Errorf("failed to unmarshal json: %w", err)
+		return &Link{}, fmt.Errorf("failed to unmarshal json: %w", err)
 	}
 
 	return data, nil

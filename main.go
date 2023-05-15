@@ -2,27 +2,27 @@ package main
 
 import (
 	"fmt"
-	"github.com/ystv/computing_site/link"
-	"log"
-	"net/http"
-	"time"
-
 	"github.com/gorilla/mux"
+	"github.com/ystv/computing_site/link"
 	"github.com/ystv/computing_site/team"
 	"github.com/ystv/computing_site/templates"
+	"log"
+	"net/http"
 )
 
 type Web struct {
 	mux  *mux.Router
 	t    *templates.Templater
-	link link.Link
-	team []team.Member
+	link *link.Link
+	team *[]team.Member
 }
 
 func main() {
 	var err error
 
-	web := Web{mux: mux.NewRouter(), t: templates.New()}
+	web := Web{
+		mux: mux.NewRouter(),
+	}
 	log.Println("Web loaded")
 	web.link, err = link.New()
 	web.team, err = team.New()
@@ -38,15 +38,12 @@ func main() {
 }
 
 func (web *Web) indexPage(w http.ResponseWriter, _ *http.Request) {
-	params := templates.DashboardParams{
-		Base: templates.BaseParams{
-			SystemTime: time.Now(),
-		},
+	params := &templates.DashboardParams{
 		Link: web.link,
 		Team: web.team,
 	}
 
-	err := web.t.Dashboard(w, params)
+	err := web.t.RenderTemplate(w, params, "dashboard.tmpl")
 	if err != nil {
 		err = fmt.Errorf("failed to render dashboard: %w", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)

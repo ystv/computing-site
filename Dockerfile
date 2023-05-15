@@ -1,6 +1,6 @@
-FROM golang:1.19.5-alpine3.17
+FROM golang:1.20.4-alpine3.18
 
-LABEL site="computing"
+LABEL site="computing-site"
 LABEL stage="builder"
 
 WORKDIR /src/

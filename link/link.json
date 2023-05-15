@@ -1,0 +1,98 @@
+{
+  "docs": [
+    {
+      "url": "https://docs.ystv.co.uk/wiki/Computing:YSTV_Computing",
+      "name": "General documentation"
+    },
+    {
+      "url": "https://api.ystv.co.uk/swagger/index.html",
+      "name": "API documentation"
+    }
+  ],
+  "comp": [
+    {
+      "url": "https://ci.ystv.co.uk",
+      "name": "Old Continuous Integration"
+    },
+    {
+      "url": "https://ci.comp.ystv.co.uk",
+      "name": "New Continuous Integration"
+    },
+    {
+      "url": "https://db.ystv.co.uk",
+      "name": "DB administration",
+      "extra": "currently broken"
+    },
+    {
+      "url": "https://ystv.co.uk/xymon",
+      "name": "System health monitor"
+    },
+    {
+      "url": "https://docker.ystv.co.uk",
+      "name": "Docker Administration"
+    },
+    {
+      "url": "https://cobra.ystv.co.uk",
+      "name": "Stream management"
+    },
+    {
+      "url": "https://streamer.dev.ystv.co.uk",
+      "name": "Streamer",
+      "extra": "Stream forwarding"
+    },
+    {
+      "url": "https://infra.comp.ystv.co.uk",
+      "name": "Infrastructure visualisation"
+    },
+    {
+      "url": "https://help.ystv.co.uk/scp",
+      "name": "Ticket tracking"
+    },
+    {
+      "url": "https://consul.comp.ystv.co.uk",
+      "name": "Consul Dashboard"
+    },
+    {
+      "url": "https://nomad.comp.ystv.co.uk",
+      "name": "Nomad Dashboard"
+    },
+    {
+      "url": "https://inventory.ystv.co.uk",
+      "name": "Inventory"
+    }
+  ],
+  "uni": [
+    {
+      "url": "https://footprints.york.ac.uk",
+      "name": "Footprints",
+      "extra": "(not available by default / retired)"
+    },
+    {
+      "url": "https://vcenter.york.ac.uk",
+      "name": "vSphere",
+      "extra": "($ account / VPN only)"
+    },
+    {
+      "url": "https://workspace.york.ac.uk",
+      "name": "VDS - Virtual Desktop Service",
+      "extra": "($ account)"
+    }
+  ],
+  "staging": [
+    {
+      "url": "https://dev.ystv.co.uk",
+      "name": "Public site",
+      "extra": "(follows master branch)"
+    },
+    {
+      "url": "https://api.dev.ystv.co.uk",
+      "name": "API",
+      "extra": "(coming soon!)"
+    },
+    {
+      "url": "https://my.dev.ystv.co.uk",
+      "name": "MyTV",
+      "extra": "(coming soon!)"
+    }
+  ]
+}
