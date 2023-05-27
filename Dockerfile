@@ -17,7 +17,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go generate
 
 COPY *.go ./
 
-RUN apk update && apk upgrade && apk add --no-cache git
+RUN apk update && apk upgrade
 
 # Set build variables
 RUN echo -n "-X 'main.Version=$COMP_SITE_VERSION_ARG" > ./ldflags && \
