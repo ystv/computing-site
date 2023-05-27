@@ -15,7 +15,6 @@ pipeline {
   stages {
     stage('Build image') {
       steps {
-        sh "git log --format="%H" -n 1"
         script {
           GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
           docker.withRegistry('https://' + registryEndpoint, 'docker-registry') {
