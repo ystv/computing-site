@@ -20,6 +20,7 @@ type (
 	DashboardParams struct {
 		Link    *link.Link
 		Team    *[]team.Member
+		Commit  string
 		Version string
 	}
 )

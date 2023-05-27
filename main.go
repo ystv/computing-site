@@ -15,7 +15,10 @@ import (
 //go:embed public/*
 var embeddedFiles embed.FS
 
-var Version = "unknown"
+var (
+	Commit  = "unknown"
+	Version = "unknown"
+)
 
 type Web struct {
 	mux  *mux.Router
@@ -44,7 +47,7 @@ func main() {
 	//web.mux.HandleFunc("/ystv.ico", web.faviconHandler)
 	//web.mux.HandleFunc("/stylesheet.css", web.cssHandler)
 	web.mux.PathPrefix("/public/").Handler(http.StripPrefix("/public/", assetHandler))
-	log.Printf("YSTV Computing site: %s, version: %s\n", addr, Version)
+	log.Printf("YSTV Computing site: %s, commit: %s, version: %s\n", addr, Commit, Version)
 	log.Fatal(http.ListenAndServe(addr, web.mux))
 }
 
@@ -52,6 +55,7 @@ func (web *Web) indexPage(w http.ResponseWriter, _ *http.Request) {
 	params := &templates.DashboardParams{
 		Link:    web.link,
 		Team:    web.team,
+		Commit:  Commit,
 		Version: Version,
 	}
 
