@@ -6,6 +6,7 @@ LABEL stage="builder"
 WORKDIR /src/
 
 ARG COMP_SITE_VERSION_ARG
+ARG COMP_SITE_COMMIT_ARG
 
 COPY go.mod ./
 COPY go.sum ./
@@ -21,7 +22,7 @@ RUN apk update && apk upgrade && apk add --no-cache git
 # Set build variables
 RUN echo -n "-X 'main.Version=$COMP_SITE_VERSION_ARG" > ./ldflags && \
     tr -d \\n < ./ldflags > ./temp && mv ./temp ./ldflags && \
-    echo -n "' -X 'main.Commit=$(git log --format="%H" -n 1)" >> ./ldflags && \
+    echo -n "' -X 'main.Commit=$COMP_SITE_COMMIT_ARG" >> ./ldflags && \
     tr -d \\n < ./ldflags > ./temp && mv ./temp ./ldflags && \
     echo -n "'" >> ./ldflags
 

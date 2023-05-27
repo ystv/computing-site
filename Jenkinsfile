@@ -15,9 +15,10 @@ pipeline {
   stages {
     stage('Build image') {
       steps {
+        sh "git log --format="%H" -n 1"
         script {
           docker.withRegistry('https://' + registryEndpoint, 'docker-registry') {
-            image = docker.build(imageName, "--build-arg COMP_SITE_VERSION_ARG=${env.BRANCH_NAME}-${env.BUILD_ID} .")
+            image = docker.build(imageName, "--build-arg COMP_SITE_VERSION_ARG=${env.BRANCH_NAME}-${env.BUILD_ID} --build-arg COMP_SITE_COMMIT_ARG=$(git log --format="%H" -n 1) .")
           }
         }
       }
