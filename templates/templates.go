@@ -2,11 +2,12 @@ package templates
 
 import (
 	"embed"
-	"fmt"
 	"github.com/ystv/computing_site/link"
 	"github.com/ystv/computing_site/team"
 	"html/template"
 	"io"
+	"log"
+	"time"
 )
 
 //go:embed *.tmpl
@@ -23,9 +24,17 @@ type (
 )
 
 func (t *Templater) RenderTemplate(w io.Writer, data *DashboardParams, mainTmpl string) error {
-	t1, err := template.New("base.tmpl").ParseFS(tmpls, "base.tmpl", mainTmpl)
+	t1 := template.New("_base.tmpl")
+
+	t1.Funcs(template.FuncMap{
+		"thisYear": func() int {
+			return time.Now().Year()
+		},
+	})
+
+	t1, err := t1.ParseFS(tmpls, "_base.tmpl", "_top.tmpl", "_footer.tmpl", mainTmpl)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return err
 	}
 
