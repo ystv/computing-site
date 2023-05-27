@@ -1,27 +1,26 @@
 [
   {
-    "name": "Liam Burnand",
+    "name": "Dan Wade",
     "role": "Computing Director"
   },
   {
-    "name": "Dan Wade",
-    "role": "Deputy Computing Director and Systems Coordinator"
+    "name": "Octavia Sanger"
+    "role": "Deputy Computing Director"
   },
   {
-    "name": "John Cherry",
-    "role": "Development Coordinator"
+    "name": "Liam Burnand"
   },
   {
-    "name": "Jamie Parker-East",
-    "role": "Website Coordinator"
+    "name": "John Cherry"
   },
   {
-    "name": "Beth Marsch",
-    "role": "Production Coordinator"
+    "name": "Jamie Parker-East"
   },
   {
-    "name": "Rhys Milling",
-    "role": "Computing Social Secretary"
+    "name": "Beth Marsch"
+  },
+  {
+    "name": "Rhys Milling"
   },
   {
     "name": "Marks Polakovs"
