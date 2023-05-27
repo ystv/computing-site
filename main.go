@@ -15,6 +15,8 @@ import (
 //go:embed public/*
 var embeddedFiles embed.FS
 
+var Version = "unknown"
+
 type Web struct {
 	mux  *mux.Router
 	t    *templates.Templater
@@ -28,7 +30,6 @@ func main() {
 	web := Web{
 		mux: mux.NewRouter(),
 	}
-	log.Println("Web loaded")
 	web.link, err = link.New()
 	web.team, err = team.New()
 	if err != nil {
@@ -37,18 +38,21 @@ func main() {
 
 	assetHandler := http.FileServer(getFileSystem())
 
+	addr := "0.0.0.0:7075"
+
 	web.mux.HandleFunc("/", web.indexPage).Methods("GET")
 	//web.mux.HandleFunc("/ystv.ico", web.faviconHandler)
 	//web.mux.HandleFunc("/stylesheet.css", web.cssHandler)
 	web.mux.PathPrefix("/public/").Handler(http.StripPrefix("/public/", assetHandler))
-	log.Println("YSTV Computing site: 0.0.0.0:7075")
-	log.Fatal(http.ListenAndServe("0.0.0.0:7075", web.mux))
+	log.Printf("YSTV Computing site: %s, version: %s\n", addr, Version)
+	log.Fatal(http.ListenAndServe(addr, web.mux))
 }
 
 func (web *Web) indexPage(w http.ResponseWriter, _ *http.Request) {
 	params := &templates.DashboardParams{
-		Link: web.link,
-		Team: web.team,
+		Link:    web.link,
+		Team:    web.team,
+		Version: Version,
 	}
 
 	err := web.t.RenderTemplate(w, params, "dashboard.tmpl")

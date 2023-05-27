@@ -5,6 +5,8 @@ LABEL stage="builder"
 
 WORKDIR /src/
 
+ARG COMP_SITE_VERSION_ARG
+
 COPY go.mod ./
 COPY go.sum ./
 COPY . ./
@@ -16,7 +18,12 @@ COPY *.go ./
 
 RUN apk update && apk add git
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /bin/computing
+# Set build variables
+RUN echo -n "-X 'main.Version=$COMP_SITE_VERSION_ARG" > ./ldflags && \
+    tr -d \\n < ./ldflags > ./temp && mv ./temp ./ldflags && \
+    echo -n "'" >> ./ldflags
+
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="$(cat ./ldflags)" -o /bin/computing
 
 EXPOSE 7075
 

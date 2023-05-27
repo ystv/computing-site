@@ -18,8 +18,9 @@ type (
 		dashboard *template.Template
 	}
 	DashboardParams struct {
-		Link *link.Link
-		Team *[]team.Member
+		Link    *link.Link
+		Team    *[]team.Member
+		Version string
 	}
 )
 
