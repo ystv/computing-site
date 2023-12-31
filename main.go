@@ -34,6 +34,9 @@ func main() {
 		mux: mux.NewRouter(),
 	}
 	web.link, err = link.New()
+	if err != nil {
+		log.Printf("failed to get link: %+v\n", err)
+	}
 	web.team, err = team.New()
 	if err != nil {
 		log.Printf("failed to get team: %+v\n", err)
