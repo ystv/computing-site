@@ -14,9 +14,8 @@ import (
 var tmpls embed.FS
 
 type (
-	Templater struct {
-		dashboard *template.Template
-	}
+	Templater struct{}
+
 	DashboardParams struct {
 		Link    *link.Link
 		Team    *[]team.Member
