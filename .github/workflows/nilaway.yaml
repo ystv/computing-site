@@ -1,0 +1,23 @@
+name: nilaway
+on: [push, pull_request]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  nilaway:
+    name: nilaway
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: WillAbides/setup-go-faster@v1
+        with:
+          go-version: '1.21'
+      - name: nilaway
+        uses: uber-go/nilaway
+        with:
+          version: latest
+
+          # Show only new issues if it's a pull request.
+          only-new-issues: true
