@@ -15,7 +15,7 @@ jobs:
         with:
           go-version: '1.21'
       - name: nilaway
-        uses: uber-go/nilaway
+        uses: uber-go/nilaway@v1
         with:
           version: latest
 
