@@ -14,10 +14,7 @@ jobs:
       - uses: WillAbides/setup-go-faster@v1
         with:
           go-version: '1.21'
-      - name: nilaway
-        uses: uber-go/nilaway@v1
-        with:
-          version: latest
-
-          # Show only new issues if it's a pull request.
-          only-new-issues: true
+      - name: download nilaway
+        run: go install go.uber.org/nilaway/cmd/nilaway@latest
+      - name: run nilaway
+        run: nilaway .
