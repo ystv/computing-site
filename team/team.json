@@ -4,17 +4,33 @@
     "role": "Computing Director"
   },
   {
-    "name": "Octavia Sanger",
-    "role": "Deputy Computing Director"
+    "name": "Max Moir",
+    "role": "Development Coordinator"
+  },
+  {
+    "name": "Ashley Bryan",
+    "role": "Systems Coordinator"
+  },
+  {
+    "name": "Kory Anderson",
+    "role": "Website Coordinator"
+  },
+  {
+    "name": "Thea Page",
+    "role": "Production Coordinator"
+  },
+  {
+    "name": "Jamie Parker-East",
+    "role": "Computing Social Secretary"
   },
   {
     "name": "Liam Burnand"
   },
   {
-    "name": "John Cherry"
+    "name": "Alyx BB"
   },
   {
-    "name": "Jamie Parker-East"
+    "name": "Bee Stevens"
   },
   {
     "name": "Beth Marsch"
@@ -33,8 +49,5 @@
   },
   {
     "name": "Erin McLeod"
-  },
-  {
-    "name": "Connor Sanders"
   }
 ]
