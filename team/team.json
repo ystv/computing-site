@@ -1,15 +1,15 @@
 [
   {
-    "name": "Dan Wade",
+    "name": "Liam Burnand",
     "role": "Computing Director"
   },
   {
-    "name": "Liam Burnand",
+    "name": "Vacant",
     "role":  "Deputy Computing Director"
   },
   {
     "name": "Max Moir",
-    "role": "Development Coordinator"
+    "role": "Technical Director and Development Coordinator"
   },
   {
     "name": "Ashley Bryan",
@@ -17,7 +17,7 @@
   },
   {
     "name": "Kory Anderson",
-    "role": "Website Coordinator"
+    "role": "Treasure and Website Coordinator"
   },
   {
     "name": "Thea Page",
@@ -25,7 +25,10 @@
   },
   {
     "name": "Jamie Parker-East",
-    "role": "Computing Social Secretary"
+    "role": "Head of Commercial and Computing Social Secretary"
+  },
+  {
+    "name": "Dan Wade"
   },
   {
     "name": "Alyx BB"
