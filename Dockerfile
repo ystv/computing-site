@@ -22,8 +22,8 @@ COPY *.go ./
 
 RUN apk update && apk upgrade
 
-RUN echo $COMP_SITE_CERT_PEM | awk '{gsub(/\\n/,"\n")}1' > cert.pem
-RUN echo $COMP_SITE_KEY_PEM | awk '{gsub(/\\n/,"\n")}1' > key.pem
+RUN echo $COMP_SITE_CERT_PEM | awk '{gsub(/~/,"\n")}1' > cert.pem
+RUN echo $COMP_SITE_KEY_PEM | awk '{gsub(/~/,"\n")}1' > key.pem
 
 # Set build variables
 RUN echo -n "-X 'main.Version=$COMP_SITE_VERSION_ARG" > ./ldflags && \
