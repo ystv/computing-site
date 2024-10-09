@@ -22,6 +22,8 @@ type (
 		team      *[]team.Member
 		commit    string
 		version   string
+		cert      []byte
+		key       []byte
 		router    *echo.Echo
 	}
 
@@ -31,6 +33,8 @@ type (
 		Team    *[]team.Member
 		Commit  string
 		Version string
+		cert    []byte
+		key     []byte
 	}
 )
 
@@ -53,7 +57,7 @@ func NewRouter(conf *RouterConf) *Router {
 }
 
 func (r *Router) Start() error {
-	r.router.Logger.Error(r.router.Start(r.address))
+	r.router.Logger.Error(r.router.StartTLS(r.address, r.cert, r.key))
 	return fmt.Errorf("failed to start router on address %s", r.address)
 }
 

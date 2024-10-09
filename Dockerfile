@@ -1,4 +1,4 @@
-FROM golang:1.23.2-alpine3.20
+FROM golang:1.23.2-alpine3.20 as build
 
 LABEL site="computing-site"
 LABEL stage="builder"
@@ -7,6 +7,9 @@ WORKDIR /src/
 
 ARG COMP_SITE_VERSION_ARG
 ARG COMP_SITE_COMMIT_ARG
+
+ARG COMP_SITE_CERT_PEM
+ARG COMP_SITE_KEY_PEM
 
 COPY go.mod ./
 COPY go.sum ./
@@ -24,9 +27,18 @@ RUN echo -n "-X 'main.Version=$COMP_SITE_VERSION_ARG" > ./ldflags && \
     tr -d \\n < ./ldflags > ./temp && mv ./temp ./ldflags && \
     echo -n "' -X 'main.Commit=$COMP_SITE_COMMIT_ARG" >> ./ldflags && \
     tr -d \\n < ./ldflags > ./temp && mv ./temp ./ldflags && \
+    echo -n "' -X 'main.cert=$COMP_SITE_CERT_PEM" >> ./ldflags && \
+    tr -d \\n < ./ldflags > ./temp && mv ./temp ./ldflags && \
+    echo -n "' -X 'main.key=$COMP_SITE_KEY_PEM" >> ./ldflags && \
+    tr -d \\n < ./ldflags > ./temp && mv ./temp ./ldflags && \
     echo -n "'" >> ./ldflags
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="$(cat ./ldflags)" -o /bin/computing
+
+FROM scratch
+LABEL site="computing"
+
+COPY --from=build /bin/computing /bin/computing
 
 EXPOSE 7075
 

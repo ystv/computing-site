@@ -14,9 +14,16 @@ var embeddedFiles embed.FS
 var (
 	Commit  = "unknown"
 	Version = "unknown"
+
+	cert = ""
+	key  = ""
 )
 
 func main() {
+	if cert == "" || key == "" {
+		log.Fatalf("missing required cert and key")
+	}
+
 	link1, err := link.New()
 	if err != nil {
 		log.Printf("failed to get link: %+v\n", err)
@@ -34,6 +41,8 @@ func main() {
 		Team:    team1,
 		Commit:  Commit,
 		Version: Version,
+		cert:    []byte(cert),
+		key:     []byte(key),
 	})
 
 	log.Printf("YSTV Computing site: %s, commit: %s, version: %s\n", addr, Commit, Version)
