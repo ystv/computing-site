@@ -22,14 +22,13 @@ COPY *.go ./
 
 RUN apk update && apk upgrade
 
+RUN echo $COMP_SITE_CERT_PEM | awk '{gsub(/\\n/,"\n")}1' > cert.pem
+RUN echo $COMP_SITE_KEY_PEM | awk '{gsub(/\\n/,"\n")}1' > key.pem
+
 # Set build variables
 RUN echo -n "-X 'main.Version=$COMP_SITE_VERSION_ARG" > ./ldflags && \
     tr -d \\n < ./ldflags > ./temp && mv ./temp ./ldflags && \
     echo -n "' -X 'main.Commit=$COMP_SITE_COMMIT_ARG" >> ./ldflags && \
-    tr -d \\n < ./ldflags > ./temp && mv ./temp ./ldflags && \
-    echo -n "' -X 'main.cert=$COMP_SITE_CERT_PEM" >> ./ldflags && \
-    tr -d \\n < ./ldflags > ./temp && mv ./temp ./ldflags && \
-    echo -n "' -X 'main.key=$COMP_SITE_KEY_PEM" >> ./ldflags && \
     tr -d \\n < ./ldflags > ./temp && mv ./temp ./ldflags && \
     echo -n "'" >> ./ldflags
 

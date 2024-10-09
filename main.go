@@ -11,17 +11,20 @@ import (
 //go:embed public/*
 var embeddedFiles embed.FS
 
+//go:embed cert.pem
+var cert []byte
+
+//go:embed key.pem
+var key []byte
+
 var (
 	Commit  = "unknown"
 	Version = "unknown"
-
-	cert = ""
-	key  = ""
 )
 
 func main() {
-	if cert == "" || key == "" {
-		log.Fatalf("missing required cert and key")
+	if len(cert) == 0 || len(key) == 0 {
+		log.Fatalf("missing required cert or key")
 	}
 
 	link1, err := link.New()
@@ -41,8 +44,8 @@ func main() {
 		Team:    team1,
 		Commit:  Commit,
 		Version: Version,
-		cert:    []byte(cert),
-		key:     []byte(key),
+		cert:    cert,
+		key:     key,
 	})
 
 	log.Printf("YSTV Computing site: %s, commit: %s, version: %s\n", addr, Commit, Version)
