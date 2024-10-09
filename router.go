@@ -45,6 +45,8 @@ func NewRouter(conf *RouterConf) *Router {
 		team:    conf.Team,
 		commit:  conf.Commit,
 		version: conf.Version,
+		cert:    cert,
+		key:     key,
 		router:  echo.New(),
 	}
 	r.router.HideBanner = true
