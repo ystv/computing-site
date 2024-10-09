@@ -30,7 +30,7 @@ pipeline {
           ]
           withVault([configuration: vaultConfig, vaultSecrets: secrets]) {
             docker.withRegistry('https://' + registryEndpoint, 'docker-registry') {
-              image = docker.build(imageName, "--build-arg COMP_SITE_VERSION_ARG=${env.BRANCH_NAME}-${env.BUILD_ID} --build-arg COMP_SITE_COMMIT_ARG=${GIT_COMMIT_HASH} --build-arg COMP_SITE_CERT_PEM=${COMP_SITE_CERT_PEM} --build-arg COMP_SITE_KEY_PEM=${COMP_SITE_KEY_PEM} .")
+              image = docker.build(imageName, "--build-arg COMP_SITE_VERSION_ARG=${env.BRANCH_NAME}-${env.BUILD_ID} --build-arg COMP_SITE_COMMIT_ARG=${GIT_COMMIT_HASH} --build-arg COMP_SITE_CERT_PEM='${COMP_SITE_CERT_PEM}' --build-arg COMP_SITE_KEY_PEM='${COMP_SITE_KEY_PEM}' .")
             }
           }
         }
