@@ -59,7 +59,8 @@ func NewRouter(conf *RouterConf) *Router {
 }
 
 func (r *Router) Start() error {
-	r.router.Logger.Error(r.router.StartTLS(r.address, r.cert, r.key))
+	// r.router.Logger.Error(r.router.StartTLS(r.address, r.cert, r.key))
+	r.router.Logger.Error(r.router.Start(r.address))
 	return fmt.Errorf("failed to start router on address %s", r.address)
 }
 
