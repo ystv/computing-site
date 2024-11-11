@@ -11,12 +11,8 @@
   ],
   "comp": [
     {
-      "url": "https://ci.ystv.co.uk",
-      "name": "Old Continuous Integration"
-    },
-    {
       "url": "https://ci.comp.ystv.co.uk",
-      "name": "New Continuous Integration"
+      "name": "Continuous Integration"
     },
     {
       "url": "https://db.ystv.co.uk",
