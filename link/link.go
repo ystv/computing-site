@@ -52,7 +52,7 @@ func New() (*Link, error) {
 	}
 
 	fmt.Println(link)
-	link = strings.ReplaceAll(link, "'", "\"")
+	link = strings.ReplaceAll(link, "~", "\"")
 	fmt.Println(link)
 
 	var data *Link
