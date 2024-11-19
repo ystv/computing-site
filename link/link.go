@@ -43,7 +43,7 @@ type (
 func New() (*Link, error) {
 	err := godotenv.Load()
 	if err != nil {
-		fmt.Printf("error loading .env file: %s", err)
+		fmt.Printf("error loading .env file: %+v\n", err)
 	}
 
 	link := os.Getenv("LINK_JSON")
@@ -51,6 +51,7 @@ func New() (*Link, error) {
 		return nil, fmt.Errorf("LINK_JSON environment variable cannot be found")
 	}
 
+	fmt.Println(link)
 	link = strings.ReplaceAll(link, "'", "\"")
 	fmt.Println(link)
 

@@ -19,7 +19,7 @@ type (
 func New() (*[]Member, error) {
 	err := godotenv.Load()
 	if err != nil {
-		fmt.Printf("error loading .env file: %s", err)
+		fmt.Printf("error loading .env file: %+v\n", err)
 	}
 
 	team := os.Getenv("TEAM_JSON")
@@ -27,6 +27,7 @@ func New() (*[]Member, error) {
 		return nil, fmt.Errorf("TEAM_JSON environment variable cannot be found")
 	}
 
+	fmt.Println(team)
 	team = strings.ReplaceAll(team, "'", "\"")
 	fmt.Println(team)
 
