@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
@@ -25,6 +26,8 @@ func New() (*[]Member, error) {
 	if len(team) == 0 {
 		return nil, fmt.Errorf("TEAM_JSON environment variable cannot be found")
 	}
+
+	team = strings.ReplaceAll(team, "'", "\"")
 
 	var data *[]Member
 	err = json.Unmarshal([]byte(team), &data)

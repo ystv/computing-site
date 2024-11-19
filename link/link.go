@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
@@ -49,6 +50,9 @@ func New() (*Link, error) {
 	if len(link) == 0 {
 		return nil, fmt.Errorf("LINK_JSON environment variable cannot be found")
 	}
+
+	link = strings.ReplaceAll(link, "'", "\"")
+
 	var data *Link
 	err = json.Unmarshal([]byte(link), &data)
 	if err != nil {
