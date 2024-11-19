@@ -43,7 +43,7 @@ type (
 func New() (*Link, error) {
 	err := godotenv.Load()
 	if err != nil {
-		return nil, fmt.Errorf("error loading .env file: %w", err)
+		fmt.Printf("error loading .env file: %s", err)
 	}
 
 	link := os.Getenv("LINK_JSON")
