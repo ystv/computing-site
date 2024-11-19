@@ -3,6 +3,7 @@ package team
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -19,18 +20,15 @@ type (
 func New() (*[]Member, error) {
 	err := godotenv.Load()
 	if err != nil {
-		fmt.Printf("error loading .env file: %+v\n", err)
+		log.Printf("error loading .env file: %+v, continuing", err)
 	}
 
 	team := os.Getenv("TEAM_JSON")
 	if len(team) == 0 {
-		fmt.Println("TEAM_JSON environment variable not set")
-		//return nil, fmt.Errorf("TEAM_JSON environment variable cannot be found")
+		return nil, fmt.Errorf("TEAM_JSON environment variable cannot be found")
 	}
 
-	fmt.Println(team)
 	team = strings.ReplaceAll(team, "~", "\"")
-	fmt.Println(team)
 
 	var data *[]Member
 	err = json.Unmarshal([]byte(team), &data)

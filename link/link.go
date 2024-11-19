@@ -3,6 +3,7 @@ package link
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -43,7 +44,7 @@ type (
 func New() (*Link, error) {
 	err := godotenv.Load()
 	if err != nil {
-		fmt.Printf("error loading .env file: %+v\n", err)
+		log.Printf("error loading .env file: %+v, continuing", err)
 	}
 
 	link := os.Getenv("LINK_JSON")
@@ -51,9 +52,7 @@ func New() (*Link, error) {
 		return nil, fmt.Errorf("LINK_JSON environment variable cannot be found")
 	}
 
-	fmt.Println(link)
 	link = strings.ReplaceAll(link, "~", "\"")
-	fmt.Println(link)
 
 	var data *Link
 	err = json.Unmarshal([]byte(link), &data)
