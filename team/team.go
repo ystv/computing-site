@@ -1,13 +1,12 @@
 package team
 
 import (
-	"embed"
 	"encoding/json"
 	"fmt"
-)
+	"os"
 
-//go:embed team.json
-var teamJson embed.FS
+	"github.com/joho/godotenv"
+)
 
 type (
 	Member struct {
@@ -17,13 +16,18 @@ type (
 )
 
 func New() (*[]Member, error) {
-	team, err := teamJson.ReadFile("team.json")
+	err := godotenv.Load()
 	if err != nil {
-		fmt.Printf("error loading team.json file: %s", err)
+		return nil, fmt.Errorf("error loading .env file: %w", err)
+	}
+
+	team := os.Getenv("TEAM_JSON")
+	if len(team) == 0 {
+		return nil, fmt.Errorf("TEAM_JSON environment variable cannot be found")
 	}
 
 	var data *[]Member
-	err = json.Unmarshal(team, &data)
+	err = json.Unmarshal([]byte(team), &data)
 	if err != nil {
 		return nil, fmt.Errorf("failed to unmarshal json: %w", err)
 	}
