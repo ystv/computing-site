@@ -28,6 +28,7 @@ func New() (*[]Member, error) {
 	}
 
 	team = strings.ReplaceAll(team, "'", "\"")
+	fmt.Println(team)
 
 	var data *[]Member
 	err = json.Unmarshal([]byte(team), &data)

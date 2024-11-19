@@ -52,6 +52,7 @@ func New() (*Link, error) {
 	}
 
 	link = strings.ReplaceAll(link, "'", "\"")
+	fmt.Println(link)
 
 	var data *Link
 	err = json.Unmarshal([]byte(link), &data)
