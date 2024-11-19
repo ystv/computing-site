@@ -24,8 +24,16 @@ func New() (*[]Member, error) {
 
 	team := os.Getenv("TEAM_JSON")
 	if len(team) == 0 {
-		return nil, fmt.Errorf("TEAM_JSON environment variable cannot be found")
+		fmt.Println("TEAM_JSON environment variable not set")
+		//return nil, fmt.Errorf("TEAM_JSON environment variable cannot be found")
 	}
+
+	var sec map[string]interface{}
+	if err = json.Unmarshal([]byte(team), &sec); err != nil {
+		fmt.Printf("error unmarshalling secret: %+v\n", err)
+	}
+
+	fmt.Println(sec)
 
 	fmt.Println(team)
 	team = strings.ReplaceAll(team, "'", "\"")
