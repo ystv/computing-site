@@ -1,7 +1,7 @@
 String registryEndpoint = 'registry.comp.ystv.co.uk'
 
 def vaultConfig = [vaultUrl: 'https://vault.comp.ystv.co.uk',
-                  vaultCredentialId: 'jenkins-vault',
+                  vaultCredentialId: 'vault-ansible',
                   engineVersion: 2]
 
 def branch = env.BRANCH_NAME.replaceAll("/", "_")
