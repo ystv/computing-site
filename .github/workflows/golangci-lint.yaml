@@ -14,6 +14,10 @@ jobs:
       - uses: WillAbides/setup-go-faster@v1
         with:
           go-version: '1.24'
+      - name: touching cert
+        run: touch cert.pem
+      - name: touching key
+        run: touch key.pem
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v8
         with:
