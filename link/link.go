@@ -2,6 +2,7 @@ package link
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -49,7 +50,7 @@ func New() (*Link, error) {
 
 	link := os.Getenv("LINK_JSON")
 	if len(link) == 0 {
-		return nil, fmt.Errorf("LINK_JSON environment variable cannot be found")
+		return nil, errors.New("LINK_JSON environment variable cannot be found")
 	}
 
 	link = strings.ReplaceAll(link, "~", "\"")

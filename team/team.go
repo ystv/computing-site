@@ -2,6 +2,7 @@ package team
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -25,7 +26,7 @@ func New() (*[]Member, error) {
 
 	team := os.Getenv("TEAM_JSON")
 	if len(team) == 0 {
-		return nil, fmt.Errorf("TEAM_JSON environment variable cannot be found")
+		return nil, errors.New("TEAM_JSON environment variable cannot be found")
 	}
 
 	team = strings.ReplaceAll(team, "~", "\"")
