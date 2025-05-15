@@ -1,8 +1,7 @@
 String registryEndpoint = 'registry.comp.ystv.co.uk'
 
 def vaultConfig = [vaultUrl: 'https://vault.comp.ystv.co.uk',
-                  vaultCredentialId: 'jenkins-vault',
-                  engineVersion: 2]
+                  vaultCredentialId: 'jenkins-vault-token']
 
 def branch = env.BRANCH_NAME.replaceAll("/", "_")
 def image
@@ -23,7 +22,7 @@ pipeline {
         script {
           GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
           def secrets = [
-            [path: "ci/ystv-internal-certs", engineVersion: 2, secretValues: [
+            [path: "ci/ystv-internal-certs", secretValues: [
               [envVar: 'COMP_SITE_CERT_PEM', vaultKey: 'cert'],
               [envVar: 'COMP_SITE_KEY_PEM', vaultKey: 'key']
             ]]
