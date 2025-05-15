@@ -2,12 +2,13 @@ package templates
 
 import (
 	"embed"
-	"github.com/ystv/computing_site/link"
-	"github.com/ystv/computing_site/team"
 	"html/template"
 	"io"
 	"log"
 	"time"
+
+	"github.com/ystv/computing_site/link"
+	"github.com/ystv/computing_site/team"
 )
 
 //go:embed *.tmpl
@@ -41,3 +42,12 @@ func (t *Templater) RenderTemplate(w io.Writer, data *DashboardParams, mainTmpl 
 
 	return t1.Execute(w, data)
 }
+
+// This section is for go template linter
+var (
+	AllTemplates = [][]string{
+		{"dashboard.tmpl", "_base.tmpl", "_top.tmpl", "_footer.tmpl"},
+	}
+
+	_ = AllTemplates
+)
