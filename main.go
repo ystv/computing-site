@@ -11,9 +11,11 @@ import (
 //go:embed public/*
 var embeddedFiles embed.FS
 
+//nolint:typecheck
 //go:embed cert.pem
 var cert []byte
 
+//nolint:typecheck
 //go:embed key.pem
 var key []byte
 
