@@ -21,17 +21,17 @@ pipeline {
       steps {
         script {
           GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
-          def secrets = [
-            [path: "ci/ystv-internal-certs", secretValues: [
-              [envVar: 'COMP_SITE_CERT_PEM', vaultKey: 'cert'],
-              [envVar: 'COMP_SITE_KEY_PEM', vaultKey: 'key']
-            ]]
-          ]
-          withVault([configuration: vaultConfig, vaultSecrets: secrets]) {
+          // def secrets = [
+          //   [path: "ci/ystv-internal-certs", secretValues: [
+          //     [envVar: 'COMP_SITE_CERT_PEM', vaultKey: 'cert'],
+          //     [envVar: 'COMP_SITE_KEY_PEM', vaultKey: 'key']
+          //   ]]
+          // ]
+          // withVault([configuration: vaultConfig, vaultSecrets: secrets]) {
             docker.withRegistry('https://' + registryEndpoint, 'docker-registry') {
               image = docker.build(imageName, "--build-arg COMP_SITE_VERSION_ARG=${env.BRANCH_NAME}-${env.BUILD_ID} --build-arg COMP_SITE_COMMIT_ARG=${GIT_COMMIT_HASH} --build-arg COMP_SITE_CERT_PEM='${COMP_SITE_CERT_PEM}' --build-arg COMP_SITE_KEY_PEM='${COMP_SITE_KEY_PEM}' .")
             }
-          }
+          // }
         }
       }
     }
