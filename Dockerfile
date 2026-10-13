@@ -1,4 +1,4 @@
-FROM golang:1.25.5-alpine3.23 as build
+FROM golang:1.27.2-alpine3.25 as build
 
 LABEL site="computing-site"
 LABEL stage="builder"
