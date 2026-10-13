@@ -51,7 +51,5 @@ func main() {
 	log.Printf("YSTV Computing site: %s, commit: %s, version: %s\n", addr, Commit, Version)
 
 	err = router.Start()
-	if err != nil {
-		log.Fatalf("The web server couldn't be started!\n\n%s\n\nExiting!", err)
-	}
+	log.Fatalf("The web server couldn't be started!\n\n%s\n\nExiting!", err)
 }
